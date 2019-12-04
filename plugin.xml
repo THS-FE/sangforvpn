@@ -27,9 +27,10 @@
         <source-file src="src/android/libs/armeabi-v7a/libpkcs12cert.so" target-dir="libs/armeabi-v7a" framework="true"/>
         <source-file src="src/android/libs/armeabi-v7a/libsvpnservice.so" target-dir="libs/armeabi-v7a" framework="true"/>
 
-        <source-file src="src/android/libs/x86/libauth_forward.so" target-dir="libs/x86" framework="true"/>
+        <!--<source-file src="src/android/libs/x86/libauth_forward.so" target-dir="libs/x86" framework="true"/>
         <source-file src="src/android/libs/x86/libhttps.so" target-dir="libs/x86" framework="true"/>
         <source-file src="src/android/libs/x86/libpkcs12cert.so" target-dir="libs/x86" framework="true"/>
         <source-file src="src/android/libs/x86/libsvpnservice.so" target-dir="libs/x86" framework="true"/>
+		-->
     </platform>
 </plugin>
