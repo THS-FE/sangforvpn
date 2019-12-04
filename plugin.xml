@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cn.com.ths.sangfor.vpn" version="1.0.0"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>sangforvpn</name>
+    <js-module name="sangforvpn" src="www/sangforvpn.js">
+        <clobbers target="cordova.plugins.sangforvpn" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="sangforvpn">
+                <param name="android-package" value="cn.com.ths.sangfor.vpn.sangforvpn" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/sangforvpn.java" target-dir="src/cn/com/ths/sangfor/vpn/sangforvpn" />
+    
+
+        <source-file src="src/android/libs/SangforSDK.jar" target-dir="libs" framework="true"/>
+        <source-file src="src/android/libs/armeabi/libauth_forward.so" target-dir="libs/armeabi" framework="true"/>
+        <source-file src="src/android/libs/armeabi/libhttps.so" target-dir="libs/armeabi" framework="true"/>
+        <source-file src="src/android/libs/armeabi/libpkcs12cert.so" target-dir="libs/armeabi" framework="true"/>
+        <source-file src="src/android/libs/armeabi/libsvpnservice.so" target-dir="libs/armeabi" framework="true"/>
+
+        <source-file src="src/android/libs/armeabi-v7a/libauth_forward.so" target-dir="libs/armeabi-v7a" framework="true"/>
+        <source-file src="src/android/libs/armeabi-v7a/libhttps.so" target-dir="libs/armeabi-v7a" framework="true"/>
+        <source-file src="src/android/libs/armeabi-v7a/libpkcs12cert.so" target-dir="libs/armeabi-v7a" framework="true"/>
+        <source-file src="src/android/libs/armeabi-v7a/libsvpnservice.so" target-dir="libs/armeabi-v7a" framework="true"/>
+
+        <source-file src="src/android/libs/x86/libauth_forward.so" target-dir="libs/x86" framework="true"/>
+        <source-file src="src/android/libs/x86/libhttps.so" target-dir="libs/x86" framework="true"/>
+        <source-file src="src/android/libs/x86/libpkcs12cert.so" target-dir="libs/x86" framework="true"/>
+        <source-file src="src/android/libs/x86/libsvpnservice.so" target-dir="libs/x86" framework="true"/>
+    </platform>
+</plugin>
