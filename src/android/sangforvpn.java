@@ -58,6 +58,7 @@ public class sangforvpn extends CordovaPlugin implements LoginResultListener, Ra
     }
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        cordova.setActivityResultCallback (this);
         super.initialize(cordova, webView);
         this.context = cordova.getActivity();
         //尝试进行免密登录
@@ -93,9 +94,13 @@ public class sangforvpn extends CordovaPlugin implements LoginResultListener, Ra
             return true;
             // 注销VPN登录
         }else if(action.equals("doVPNLogout")){
-           
-           doVPNLogout();
-           callbackContext.success("success");
+           cordova.getActivity().runOnUiThread(new Runnable() {
+               @Override
+               public void run() {
+                   doVPNLogout();
+                   callbackContext.success("success");
+               }
+           });
            // 获取VPN状态
         }else  if(action.equals("getVpnState")){
            String vpnSate= getVpnState();
