@@ -93,6 +93,7 @@ public class sangforvpn extends CordovaPlugin implements LoginResultListener, Ra
             return true;
             // 注销VPN登录
         }else if(action.equals("doVPNLogout")){
+           
            doVPNLogout();
            callbackContext.success("success");
            // 获取VPN状态
