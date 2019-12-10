@@ -77,7 +77,7 @@ public class sangforvpn extends CordovaPlugin implements LoginResultListener, Ra
 //        }else
        if(action.equals("startVPNInitAndLogin")){
                 //mVpnAddress,mVpnPort,mUserName,mUserPassword
-                mVpnAddress = "https://"+args.getString(0)+":"+args.getString(1);
+                mVpnAddress = "https://"+args.getString(0)+":"+args.getInt(1);
                 mUserName = args.getString(2).trim();
                 mUserPassword = args.getString(3).trim();
             try {
