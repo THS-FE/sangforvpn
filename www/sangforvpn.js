@@ -40,7 +40,8 @@ exports.getVpnState = function (success, error) {
  */
 exports.addStatusChangedListenerInAndroidCallback = function(data) {
    //console.log('onDisconnectedReceiverInAndroidCallback' + data);
-   cordova.fireDocumentEvent('sangforvpn.addStatusChangedListener', data);
+   const d = {status: data};
+   cordova.fireDocumentEvent('sangforvpn.addStatusChangedListener', d);
 };
 
 /**
@@ -48,7 +49,8 @@ exports.addStatusChangedListenerInAndroidCallback = function(data) {
  */
 exports.onLoginInAndroidCallback = function(data) {
     //console.log('onDisconnectedReceiverInAndroidCallback' + data);
-    cordova.fireDocumentEvent('sangforvpn.onLogin', data);
+    const d = {loginRes: data};
+    cordova.fireDocumentEvent('sangforvpn.onLogin', d);
  };
 
 
