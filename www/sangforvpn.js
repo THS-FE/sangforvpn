@@ -13,7 +13,7 @@ var exec = require('cordova/exec');
 /**
  * 启动vpn 初始化并登录
  * @param mVpnAddress vpn地址ip
- * @param mVpnPort vpn地址对应的端口
+ * @param mVpnPort vpn地址对应的端口 
  * @param mUserName vpn用户名
  * @param mUserPassword vpn密码
  */
@@ -29,7 +29,7 @@ exports.doVPNLogout = function ( success, error) {
 };
 
 /**
- * 获取vpn状态
+ * 获取vpn状态，返回字段 VPNONLINE    VPNOFFLINE
  */
 exports.getVpnState = function (success, error) {
     exec(success, error, 'sangforvpn', 'getVpnState', []);
@@ -40,7 +40,7 @@ exports.getVpnState = function (success, error) {
  */
 exports.addStatusChangedListenerInAndroidCallback = function(data) {
    //console.log('onDisconnectedReceiverInAndroidCallback' + data);
-   const d = {status: data};
+   const d = {status: data};  // data对应值 vpn在线  vpn离线  vpn 重连中 
    cordova.fireDocumentEvent('sangforvpn.addStatusChangedListener', d);
 };
 
@@ -49,7 +49,7 @@ exports.addStatusChangedListenerInAndroidCallback = function(data) {
  */
 exports.onLoginInAndroidCallback = function(data) {
     //console.log('onDisconnectedReceiverInAndroidCallback' + data);
-    const d = {loginRes: data};
+    const d = {loginRes: data}; // data 对应值 success
     cordova.fireDocumentEvent('sangforvpn.onLogin', d);
  };
 

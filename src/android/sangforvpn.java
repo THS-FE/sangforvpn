@@ -1,10 +1,12 @@
 package cn.com.ths.sangfor.vpn;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,6 +38,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static android.content.Context.MODE_PRIVATE;
+import org.apache.cordova.PermissionHelper;
 
 /**
  * 深信服VPN.
@@ -52,6 +55,16 @@ public class sangforvpn extends CordovaPlugin implements LoginResultListener, Ra
     private static final int CERTFILE_REQUESTCODE = 33;        //主界面中证书选择器请求码
     private static final int DIALOG_CERTFILE_REQUESTCODE = 34; //对话框中选择器的请求码
     private static final int DEFAULT_SMS_COUNTDOWN = 30;       //短信验证码默认倒计时时间
+  /**
+   * 权限列表
+   */
+  private String[] locPerArr = new String[] {
+    Manifest.permission.INTERNET,
+    Manifest.permission.READ_PHONE_STATE,
+    Manifest.permission.ACCESS_NETWORK_STATE,
+    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    Manifest.permission.ACCESS_WIFI_STATE
+  };
     private static sangforvpn instance;
     public sangforvpn() {
         instance = this;
@@ -61,9 +74,8 @@ public class sangforvpn extends CordovaPlugin implements LoginResultListener, Ra
         cordova.setActivityResultCallback (this);
         super.initialize(cordova, webView);
         this.context = cordova.getActivity();
-        //尝试进行免密登录
-        startTicketLogin();
-        setLoginInfo();
+        //尝试申请权限并进行初始化
+        promtForInit();
     }
 
     @Override
@@ -77,7 +89,7 @@ public class sangforvpn extends CordovaPlugin implements LoginResultListener, Ra
 //        }else
        if(action.equals("startVPNInitAndLogin")){
                 //mVpnAddress,mVpnPort,mUserName,mUserPassword
-                mVpnAddress = "https://"+args.getString(0)+":"+args.getInt(1);
+                mVpnAddress = "https://"+args.getString(0)+":"+args.getString(1);
                 mUserName = args.getString(2).trim();
                 mUserPassword = args.getString(3).trim();
             try {
@@ -131,7 +143,7 @@ public class sangforvpn extends CordovaPlugin implements LoginResultListener, Ra
         } else {
            // Toast.makeText(context, "登录失败！", Toast.LENGTH_SHORT).show();
         }
-        sendMsg("fail","onLogin");
+        sendMsg(errorStr,"onLogin");
     }
 
     /**
@@ -358,4 +370,32 @@ public class sangforvpn extends CordovaPlugin implements LoginResultListener, Ra
             }
         });
     }
+
+  /**
+   * 检查权限并申请
+   */
+  private void promtForInit() {
+    for (int i = 0, len = locPerArr.length; i < len; i++) {
+      if (!PermissionHelper.hasPermission(this, locPerArr[i])) {
+        PermissionHelper.requestPermission(this, i, locPerArr[i]);
+        return;
+      }
+    }
+    // exeLoc(action);
+    //尝试进行免密登录
+    startTicketLogin();
+    setLoginInfo();
+  }
+  @Override
+  public void onRequestPermissionResult(int requestCode,
+                                        String[] permissions, int[] grantResults) throws JSONException {
+    // TODO Auto-generated method stub
+    for (int r : grantResults) {
+      if (r == PackageManager.PERMISSION_DENIED) {
+        Toast.makeText(context,"禁用权限将影响app正常运行",Toast.LENGTH_LONG).show();
+        return;
+      }
+    }
+    promtForInit();
+  }
 }
